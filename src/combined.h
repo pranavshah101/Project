@@ -29,6 +29,7 @@ extern void LCD_String_xy(char ,char ,const char *);
 extern char USART_TransmitChar(char);
 extern char USART_ReceiveChar();
 extern void UART_init(long);
+extern void usart_run();
 
  //extern void receive_character();
 

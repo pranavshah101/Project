@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "p33fj32mc204.h"
 
+char data_in;
 
 void UART_init(long BaudRate)
 {
@@ -56,4 +57,12 @@ char USART_ReceiveChar()
     }
 }
 
-
+void usart_run()
+{
+     if(U1STAbits.URXDA==1)
+        {
+           data_in=U1RXREG;
+          USART_TransmitChar(data_in);
+        
+        }
+}

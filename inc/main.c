@@ -16,7 +16,6 @@
 #include "hardware_declaration.h"
 
 
-char data_in;
 
 
 
@@ -44,13 +43,7 @@ UART_init(9600);
         
          read_adc();
          frequency_display();
-         
-        if(U1STAbits.URXDA==1)
-        {
-           data_in=U1RXREG;
-          USART_TransmitChar(data_in);
-        
-        }
+         usart_run();
        
         
   }         
