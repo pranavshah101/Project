@@ -43,8 +43,9 @@ UART_init(9600);
         
          read_adc();
          frequency_display();
-         usart_run();
-       
+        usart_run();
+        
+        //USART_TransmitChar(data_in);
         
   }         
     return 0;

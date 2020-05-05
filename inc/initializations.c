@@ -19,6 +19,7 @@ void gpioInit()
        TRISAbits.TRISA8=0;
      TRISBbits.TRISB6=0;//Make Tx pin as output
     TRISBbits.TRISB5=1; //Make RX pin as input
+    TRISAbits.TRISA7=0;
        
        
 }

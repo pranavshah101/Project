@@ -63,6 +63,15 @@ void usart_run()
         {
            data_in=U1RXREG;
           USART_TransmitChar(data_in);
+          
         
         }
+     if(data_in=='A')
+     {
+         LED=1;
+     }
+     else
+     {
+         LED=0;
+     }
 }
