@@ -16,7 +16,7 @@
 #include "hardware_declaration.h"
 
 
-
+char data_in;
 
 
 
@@ -35,18 +35,25 @@ int main(void)
     ADC_init1();
     init_timer3();
     PWM_Init();
-    init_usart_polling(9600);
+UART_init(9600);
+   
     
- 
-    while(1)
-    {
+  while(1)
+  {
+   
         
          read_adc();
          frequency_display();
-         usart_run();
          
-           
-}
+        if(U1STAbits.URXDA==1)
+        {
+           data_in=U1RXREG;
+          USART_TransmitChar(data_in);
+        
+        }
+       
+        
+  }         
     return 0;
-}
 
+}

@@ -17,6 +17,9 @@ void gpioInit()
        TRISAbits.TRISA10=0;
        TRISAbits.TRISA9=0;
        TRISAbits.TRISA8=0;
+     TRISBbits.TRISB6=0;//Make Tx pin as output
+    TRISBbits.TRISB5=1; //Make RX pin as input
+       
        
 }
 
@@ -26,8 +29,6 @@ void remapInit(){
     RPINR7bits.IC1R = 7;              // map IC1 to RP7/RB7
     RPINR18bits.U1RXR=5;
     RPOR3bits.RP6R=3;
-  
-    
     
 }
 

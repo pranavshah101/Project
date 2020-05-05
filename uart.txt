@@ -1,0 +1,70 @@
+void init_usart(unsigned long BaudRate)
+{
+    TRISBbits.TRISB5=1;
+    TRISBbits.TRISB6=0;
+    RPINR18bits.U1RXR=5;
+    RPOR3bits.RP6R=3;
+    
+    U1MODEbits.UARTEN=1;
+    U1MODEbits.USIDL=0;
+    U1MODEbits.IREN=0;
+    U1MODEbits.RTSMD=1;
+    U1MODEbits.UEN=0;
+    U1MODEbits.WAKE=1;
+    U1MODEbits.LPBACK=0;
+    U1MODEbits.URXINV=0;
+    U1MODEbits.BRGH=0;
+    U1MODEbits.PDSEL=0;
+    U1MODEbits.STSEL=0;
+    U1STAbits.UTXINV=0;
+    U1STAbits.UTXBRK=0;
+  //  U1STAbits.URXISEL=0;
+    U1STAbits.UTXEN=1;
+    U1STAbits.ADDEN=0;
+    U1BRG=(FCY/(16*(BaudRate)))-1;
+    
+    
+    
+     
+}
+
+void envia_caracter(unsigned char data) {
+
+
+
+   U1TXREG = data;
+
+   while(U1STAbits.TRMT==0){
+
+   }
+
+}
+
+
+
+
+
+   
+
+
+
+
+
+void usart_puts(char* data)
+{
+
+   while (*data)
+
+   envia_caracter(*(data++));
+
+}
+
+void usart_run()
+{
+    usart_puts("HELLO LABOTEC\r\n");
+}
+
+char usart_read()
+{
+    return (char)U1RXREG;
+}

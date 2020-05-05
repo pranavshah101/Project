@@ -14,44 +14,46 @@
 #include <stdio.h>
 #include "p33fj32mc204.h"
 
-void init_usart_polling(long BaudRate)
+
+void UART_init(long BaudRate)
 {
-    U1MODEbits.UARTEN=1;
-    U1MODEbits.USIDL=0;
-    U1MODEbits.RTSMD=1;
-    U1MODEbits.UEN=1;
-    U1MODEbits.WAKE=1;
-    U1MODEbits.LPBACK=0;
-    U1MODEbits.URXINV=0;
+   
+    
+    
     U1MODEbits.BRGH=0;
     U1MODEbits.PDSEL=0;
     U1MODEbits.STSEL=0;
-    U1STAbits.UTXINV=0;
-    U1STAbits.UTXBRK=0;
+    U1MODEbits.ABAUD=0;
+    U1BRG=(((float)FCY/BaudRate)/16)-1;
+    
+    U1STAbits.URXISEL0=0;
+    U1STAbits.URXISEL1=0;
+    U1STAbits.URXISEL=0;
+    
     U1STAbits.UTXEN=1;
-    U1STAbits.ADDEN=0;
-    
-    U1BRG=(FCY/(16*(BaudRate)))-1;
-    
+    U1MODEbits.UARTEN=1;
     
 }
 
-void envia_character (unsigned char data)
+char USART_TransmitChar(char data)
 {
+    while(U1STAbits.UTXBF== 1);
     U1TXREG=data;
-    while(U1STAbits.TRMT==0)
+    
+}
+
+char USART_ReceiveChar()
+{
+    
+    if(U1STAbits.OERR=1)
     {
+        U1STAbits.OERR=0;
         
     }
-}
-void usart_puts(char *data)
-{
-    while (*data)
-    envia_character(*(data++));
+    if(U1STAbits.URXDA=1)
+    {
+        return(U1RXREG);
+    }
 }
 
-void usart_run()
-{
-    usart_puts("HELLO LABOTEC\r\n");
-    MSDelay(100);
-}
+
