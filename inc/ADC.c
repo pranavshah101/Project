@@ -10,6 +10,7 @@
 #include "hardware_declaration.h"
 #include "p33fj32mc204.h"
 #include "LCD.h"
+#include "xc.h"
 #include "combined.h"
 #include <string.h>
 #include <stdio.h>
@@ -51,10 +52,10 @@ void ADC_init1()
      AD1CHS123bits.CH123NA=0;
      AD1CSSLbits.CSS0=1;
     AD1CSSLbits.CSS1=1;
-     AD1CSSLbits.CSS2=1;
-     AD1CSSLbits.CSS3=1;     //AD1CSSLbits.CSS2=1;
-     AD1CSSLbits.CSS4=1;
-     AD1CSSLbits.CSS5=1;
+     //AD1CSSLbits.CSS2=1;
+     //AD1CSSLbits.CSS3=1;     //AD1CSSLbits.CSS2=1;
+     //AD1CSSLbits.CSS4=1;
+     //AD1CSSLbits.CSS5=1;
      //AD1CSSLbits.CSS6=1;
     // AD1CSSLbits.CSS7=1;
   //   AD1CSSLbits.CSS8=1;
@@ -66,10 +67,10 @@ void ADC_init1()
      AD1PCFGL=0xFFFF;
      AD1PCFGLbits.PCFG0=0;
      AD1PCFGLbits.PCFG1=0;
-     AD1PCFGLbits.PCFG2=0;
-     AD1PCFGLbits.PCFG3=0;
-     AD1PCFGLbits.PCFG4=0;
-     AD1PCFGLbits.PCFG5=0;
+    // AD1PCFGLbits.PCFG2=0;
+     //AD1PCFGLbits.PCFG3=0;
+     //AD1PCFGLbits.PCFG4=0;
+     //AD1PCFGLbits.PCFG5=0;
     // AD1PCFGLbits.PCFG6=0;
      //AD1PCFGLbits.PCFG7=0;
      //AD1PCFGLbits.PCFG8=0;
@@ -99,26 +100,16 @@ void read_adc()
     
     var=(ain0Buff[sampleCounter]);
       voltage=var*((float)vref/(float)4095); 
-      if(voltage >=1.65)
-      {
-          ADC4=1;
-      }
-       else
-       {
-          ADC4=0;
-       }
+      sprintf(data,"%.2f",voltage);
+        strcat(data," V");	
+        LCD_String_xy(1,1,data);
        
       var1=(ain1Buff[sampleCounter]);
       voltage1=var1*((float)vref/(float)4095); 
-      if(voltage1 >=1.65)
-       {
-          ADC5=1;
-       }
-      else
-       {
-          ADC5=0;
-       }
-        var3=(ain2Buff[sampleCounter]);
+      sprintf(data1,"%.2f",voltage1);
+        strcat(data1," V");	
+        LCD_String_xy(1,8,data1);
+      /*  var3=(ain2Buff[sampleCounter]);
         voltage3=var3*((float)vref/(float)4095); 
         if  (voltage3>=1.65)
         {
@@ -132,19 +123,25 @@ void read_adc()
         voltage4=var4*((float)vref/(float)4095); 
         sprintf(data3,"%.2f",voltage4);
         strcat(data3," V");	
-        LCD_String_xy(2,8,data3);
+        LCD_String_xy(1,1,data3);
+       // LCD_String_xy(2,8,data3);
         
         var5=(ain4Buff[sampleCounter]);
         voltage5=var5*((float)vref/(float)4095); 
         sprintf(data4,"%.2f",voltage5);
         strcat(data4," V");	
-        LCD_String_xy(1,1,data4);
+        LCD_String_xy(1,8,data4);
+       // LCDGotoXY(0,8);			//  posicion en la direccion (4,0)
+         //LCDstring(data4,sizeof(data4));
          
         var6=(ain5Buff[sampleCounter]);
         voltage6=var6*((float)vref/(float)4095);
         sprintf(data5,"%.2f",voltage6);
         strcat(data5," V");	
-        LCD_String_xy(1,8,data5);
+        LCD_String_xy(2,1,data5);
+        //LCDGotoXY(1,1);			//  posicion en la direccion (4,0)
+         //LCDstring(data5,sizeof(data5));
+        //LCD_String_xy(1,8,data5);*/
 }
 
 
@@ -158,7 +155,7 @@ void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)
         case 1:
             ain1Buff[sampleCounter]=ADC1BUF0;
             break;
-        case 2:
+       /* case 2:
             ain2Buff[sampleCounter]=ADC1BUF0;
             break;
         case 3:
@@ -169,13 +166,13 @@ void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)
             break;
         case 5:
             ain5Buff[sampleCounter]=ADC1BUF0;
-            break;
+            break;*/
             
         default:
             break;
     }
     scanCounter=scanCounter+1;
-   if(scanCounter==6)
+   if(scanCounter==2)
     {
         scanCounter=0;
         sampleCounter=sampleCounter+1;

@@ -9,18 +9,15 @@
 #include "combined.h"
 #include "p33fj32mc204.h"
 #include <string.h>
+#include  <xc.h>
 #include <stdio.h>
 #include  <stdlib.h>
 #include <libpic30.h>
 #include  "declaration.h"
 #include "hardware_declaration.h"
 
-
-
-
-
- 
-
+  char k=0;
+  int data25;
 
 int main(void)
 {
@@ -35,19 +32,36 @@ int main(void)
     init_timer3();
     PWM_Init();
 UART_init(9600);
-   
-    
-  while(1)
-  {
-   
+keypad_init();
+
+  
+while(1)
+{
         
-         read_adc();
-         frequency_display();
-        usart_run();
+    k=keypad_getc();
+    data25=k-48;
+          read_adc();
+          	//__delay_ms(1);
+        frequency_display();
+        //	__delay_ms(1);
+         
+         USART_TransmitChar('2');
+         if(k!=0 && k!='B' && k!='C' && k!='D' && k!='*' && k!='#')
+         {
+            // LCD_Command(0x01);
+             //lcd_gotoxy(1,1);
+             lcd_print(2,1,data25,1);
+             
+         }
+         	
+       
+}
+      
         
-        //USART_TransmitChar(data_in);
-        
-  }         
+          //USART_TransmitChar('2');
+      
+  
     return 0;
+
 
 }

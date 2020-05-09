@@ -65,7 +65,7 @@ void frequency_display()
     frequency=((float)(f_timer)/(float)period*4);
     sprintf(freq_data,"%.2f",frequency);
    	
-    LCD_String_xy(2,1,freq_data);
+  LCD_String_xy(2,8,freq_data);
          
 
 }

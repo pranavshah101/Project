@@ -24,14 +24,18 @@ extern void LCD_Char(char );
 extern void LCD_String(const char *);
 extern void MSDelay(unsigned int );
 extern void LCD_String_xy(char ,char ,const char *);
-
+extern void lcd_gotoxy(uint8_t , uint8_t );
+extern void lcd_print(uint8_t , uint8_t , int , uint8_t );
 //UART COMMUNICATIONS
 extern char USART_TransmitChar(char);
 extern char USART_ReceiveChar();
 extern void UART_init(long);
 extern void usart_run();
+extern void uart_run();
 
  //extern void receive_character();
+
+//KEYPAD 
 
 
 // interrupts
